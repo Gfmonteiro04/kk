@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo da AS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro de Notas</h2>
+        <form id="notaForm">
+            <div class="form-group">
+                <label for="nota-ap1">Sua maior Nota:</label>
+                <input type="number" id="nota-ap1" name="nota-ap1" min="0" max="10" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label for="nota-ac">Nota AC:</label>
+                <input type="number" id="nota-ac" name="nota-ac" min="0" max="10" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Enviar Notas</button>
+            </div>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('notaForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obter os valores das notas
+            const maiorNota = parseFloat(document.getElementById('nota-ap1').value);
+            const notaAc = parseFloat(document.getElementById('nota-ac').value);
+
+            // Calcular as notas ponderadas
+            const resultadoMaior = maiorNota * 0.4;
+            const resultadoAc = notaAc * 0.2;
+
+            // Calcular a nota necessária na AS
+            let notaNecessaria = (7 - (resultadoMaior + resultadoAc)) / 0.4;
+
+            // Garantir que o resultado não seja negativo
+            if (notaNecessaria < 0) {
+                notaNecessaria = 0;
+            }
+
+            // Exibir o resultado
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `Nota necessária na AS: ${notaNecessaria.toFixed(2)}`;
+        });
+    </script>
+</body>
+</html>
